@@ -1,0 +1,111 @@
+{
+  "name": "salt-ai-pillar-intellisense",
+  "displayName": "Salt AI Pillar IntelliSense",
+  "description": "Offline multi-language IntelliSense for common source files, with SaltStack pillar schema completions, local static analysis and optional local-model completions.",
+  "version": "0.3.2",
+  "publisher": "local",
+  "license": "MIT",
+  "engines": { "vscode": "^1.90.0" },
+  "categories": ["Programming Languages", "Linters", "Machine Learning"],
+  "keywords": ["saltstack", "salt", "pillar", "yaml", "php", "cpp", "python", "javascript", "go", "rust", "ollama", "qwen", "ai"],
+  "main": "./extension.js",
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true,
+      "description": "Read-only: completions and validation call a loopback HTTP bridge; no workspace code is executed."
+    }
+  },
+  "activationEvents": [
+    "onStartupFinished",
+    "onLanguage:yaml",
+    "onLanguage:php",
+    "onLanguage:cpp",
+    "onLanguage:c",
+    "onLanguage:python",
+    "onLanguage:javascript",
+    "onLanguage:typescript",
+    "onLanguage:go",
+    "onLanguage:rust",
+    "workspaceContains:**/*.sls",
+    "onCommand:saltAiPillar.validate",
+    "onCommand:saltAiPillar.scan",
+    "onCommand:saltAiPillar.health",
+    "onCommand:saltAiPillar.toggle",
+    "onCommand:saltAiPillar.createToken",
+    "onCommand:saltAiPillar.openSetup"
+  ],
+  "contributes": {
+    "commands": [
+      { "command": "saltAiPillar.validate", "title": "AI Pillar: Validate YAML", "category": "Salt AI" },
+      { "command": "saltAiPillar.scan", "title": "AI Pillar: Scan for Vulnerabilities", "category": "Salt AI" },
+      { "command": "saltAiPillar.health", "title": "AI Pillar: Check Bridge Health", "category": "Salt AI" },
+      { "command": "saltAiPillar.toggle", "title": "AI Pillar: Enable/Disable Completion", "category": "Salt AI" },
+      { "command": "saltAiPillar.createToken", "title": "AI Pillar: Create Local Bridge Token", "category": "Salt AI" },
+      { "command": "saltAiPillar.openSetup", "title": "AI Pillar: Open Bridge Setup Guide", "category": "Salt AI" }
+    ],
+    "configuration": {
+      "title": "Salt AI Pillar",
+      "properties": {
+        "saltAiPillar.tokenPath": {
+          "type": "string",
+          "scope": "machine",
+          "default": "~/ai-notes/bridge-token",
+          "description": "Path to the 0600 shared secret read by both the extension and the bridge. A leading ~/ expands to the user's home directory. Workspace settings cannot override it. Use the 'Salt AI: AI Pillar: Create Local Bridge Token' command to generate it explicitly; the extension never creates it on install."
+        },
+        "saltAiPillar.eventLogPath": {
+          "type": "string",
+          "scope": "machine",
+          "default": "~/ai-notes/vscode-extension-events.log",
+          "description": "Local file for the extension's bounded event log. A leading ~/ expands to the user's home directory."
+        },
+        "saltAiPillar.healthResultPath": {
+          "type": "string",
+          "scope": "machine",
+          "default": "~/ai-notes/vscode-health-result.json",
+          "description": "Local file where the Check Bridge Health command writes its JSON result. A leading ~/ expands to the user's home directory."
+        },
+        "saltAiPillar.endpoint": {
+          "type": "string",
+          "scope": "machine",
+          "default": "http://127.0.0.1:8000",
+          "description": "Local bridge API base URL. Plain HTTP on loopback only; workspace settings cannot override it."
+        },
+        "saltAiPillar.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable completions."
+        },
+        "saltAiPillar.languageCompletions": {
+          "type": "boolean",
+          "default": true,
+          "description": "Offer offline keyword, function and snippet completions for supported source languages."
+        },
+        "saltAiPillar.useAI": {
+          "type": "boolean",
+          "scope": "machine",
+          "default": false,
+          "description": "Also ask the optional local model for a completion. Off by default; offline completions, schema validation and scanning do not need a model."
+        },
+        "saltAiPillar.debounceMs": {
+          "type": "number",
+          "default": 300,
+          "minimum": 0,
+          "description": "Debounce delay before a bridge completion call; newer edits cancel the previous request."
+        },
+        "saltAiPillar.timeoutMs": {
+          "type": "number",
+          "default": 3000,
+          "minimum": 500,
+          "description": "HTTP timeout. Raise this if useAI is enabled; model speed depends on your hardware."
+        },
+        "saltAiPillar.maxTokens": {
+          "type": "number",
+          "default": 24,
+          "minimum": 4,
+          "maximum": 64,
+          "description": "Max tokens for the optional AI completion."
+        }
+      }
+    }
+  }
+}

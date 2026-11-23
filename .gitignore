@@ -1,0 +1,19 @@
+# Build staging and generated release artifacts.
+# These are reproducible from build-release.sh / build-bridge-release.sh and
+# must not be committed (large binaries, and they can drift from source).
+/build/
+*.vsix
+*.tar.gz
+*.sha256
+node_modules/
+
+# Local state and credentials. Never commit these.
+.env
+bridge-token
+*.token
+ai-notes/
+*.log
+
+# Editor / OS noise
+.DS_Store
+*.swp

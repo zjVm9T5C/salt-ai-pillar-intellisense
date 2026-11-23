@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://local.invalid/schemas/salt-pillar.schema.json",
+  "title": "Local SaltStack pillar (AI-integrated)",
+  "description": "Schema for /srv/pillar/*.sls on this host, including the ai block consumed by /srv/salt/ai/init.sls.",
+  "type": "object",
+  "properties": {
+    "ai": {
+      "type": "object",
+      "description": "Local LLM configuration (Ollama via podman, loopback only)",
+      "properties": {
+        "enabled": { "type": "boolean", "description": "Enable the local AI state" },
+        "runtime": { "type": "string", "enum": ["podman", "docker", "none"], "description": "Container runtime" },
+        "image": { "type": "string", "description": "Ollama container image" },
+        "host": { "type": "string", "default": "127.0.0.1", "description": "Bind address; must stay loopback" },
+        "port": { "type": "integer", "minimum": 1, "maximum": 65535, "default": 11434, "description": "Ollama port" },
+        "model": {
+          "type": "string",
+          "enum": [
+            "hf.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF:Q4_K_M",
+            "hf.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF:Q4_K_M",
+            "hf.co/Qwen/Qwen2.5-3B-Instruct-GGUF:Q4_K_M"
+          ],
+          "description": "Currently loaded: Qwen2.5-0.5B (1-core CPU quota)"
+        },
+        "cpu_quota": { "type": "string", "description": "Container CPU quota, e.g. 100%" },
+        "cpu_weight": { "type": "integer", "minimum": 1, "maximum": 10000, "description": "Container CPU weight" },
+        "nice": { "type": "integer", "minimum": -20, "maximum": 19, "description": "Process nice value" },
+        "memory_max": { "type": "string", "description": "Container memory cap, e.g. 1200M" },
+        "keep_alive": { "type": "string", "description": "Ollama model keep-alive duration" },
+        "max_loaded_models": { "type": "integer", "minimum": 1, "description": "Maximum loaded models" },
+        "num_parallel": { "type": "integer", "minimum": 1, "description": "Parallel inference slots" }
+      }
+    },
+    "base": {
+      "type": "object",
+      "description": "Salt top file targets (top.sls)",
+      "properties": {
+        "*": {
+          "type": "array",
+          "description": "State list applied to all minions",
+          "items": { "type": "string", "enum": ["ssh", "postgresql", "ai", "clamav", "backup", "tasks_app"] }
+        }
+      },
+      "additionalProperties": { "type": "array", "items": { "type": "string" } }
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,45 @@
+# INERT TEMPLATE — GitHub Actions will NOT run this file because of the
+# ".example" suffix. Rename it to `publish.yml` ONLY when all of the following
+# are true:
+#
+#   1. `package.json` has the real, immutable `publisher` ID (not "local").
+#   2. `repository`, `bugs` and `homepage` point at this repository.
+#   3. An `icon.png` exists and is listed in the release allow-list.
+#   4. A Trusted Publishing policy exists in the Marketplace publisher console
+#      with the EXACT repository owner, repository name and workflow filename
+#      `publish.yml` (the filename must match after you rename this file).
+#   5. You have re-checked name/display-name uniqueness immediately before
+#      publishing.
+#
+# Publishing uses OIDC: there is no PAT and no stored Marketplace secret.
+# Global Azure DevOps PATs are retired on 2026-12-01.
+#
+# See MARKETPLACE-PUBLISHING.md for the full runbook.
+
+name: Publish VS Code extension
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # An explicit install is used rather than `npx --yes`: during validation
+      # on 2026-11-22, `npx --yes` left a partial cache missing 'cockatiel'.
+      - name: Install vsce
+        run: npm install --no-audit --no-fund @vscode/vsce@latest
+
+      - name: Publish with OIDC
+        run: ./node_modules/.bin/vsce publish --oidc

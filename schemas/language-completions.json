@@ -1,0 +1,273 @@
+{
+  "version": 1,
+  "description": "Offline keyword, function and snippet completions for common source languages. Salt pillar schema completions remain authoritative for YAML/SLS/Jinja documents.",
+  "languages": {
+    "PHP": {
+      "label": "PHP",
+      "aliases": ["php", "phtml", "php5"],
+      "extensions": [".php", ".phtml", ".php5", ".phps"],
+      "keywords": ["<?php", "namespace", "use", "class", "interface", "trait", "enum", "function", "fn", "public", "protected", "private", "static", "abstract", "final", "readonly", "return", "if", "elseif", "else", "foreach", "as", "while", "do", "for", "switch", "case", "match", "try", "catch", "finally", "throw", "new", "clone", "echo", "print", "isset", "unset", "empty", "array", "list", "null", "true", "false", "$this", "self", "parent", "include", "require", "include_once", "require_once"],
+      "functions": ["count", "strlen", "substr", "strpos", "array_map", "array_filter", "array_reduce", "json_encode", "json_decode", "preg_match", "htmlspecialchars", "filter_var", "is_array", "is_string", "is_int", "date", "time", "intval", "floatval", "explode", "implode", "trim", "array_key_exists", "defined"],
+      "snippets": [
+        { "label": "php-class", "prefix": "class", "body": "class ${1:ClassName}\n{\n  public function ${2:method}(): void\n  {\n    $0\n  }\n}\n", "description": "PHP class skeleton" },
+        { "label": "php-foreach", "prefix": "foreach", "body": "foreach (${1:items} as ${2:item}) {\n  $0\n}\n", "description": "PHP foreach loop" },
+        { "label": "php-function", "prefix": "function", "body": "function ${1:name}(${2:args}): ${3:void}\n{\n  $0\n}\n", "description": "PHP function with return type" },
+        { "label": "php-open", "prefix": "php", "body": "<?php\n\ndeclare(strict_types=1);\n\n$0\n", "description": "PHP file preamble" }
+      ]
+    },
+    "C": {
+      "label": "C",
+      "aliases": ["c", "ansi-c"],
+      "extensions": [".c", ".h"],
+      "keywords": ["#include", "#define", "#ifndef", "#ifdef", "#endif", "const", "static", "extern", "volatile", "struct", "union", "enum", "typedef", "sizeof", "return", "if", "else", "for", "while", "do", "switch", "case", "break", "continue", "goto", "NULL", "true", "false", "inline", "restrict", "register"],
+      "functions": ["printf", "fprintf", "snprintf", "malloc", "calloc", "realloc", "free", "memcpy", "memmove", "memset", "strcmp", "strncmp", "strchr", "strstr", "fopen", "fclose", "fread", "fwrite", "qsort", "bsearch"],
+      "snippets": [
+        { "label": "c-main", "prefix": "main", "body": "int main(int argc, char **argv)\n{\n  $0\n  return 0;\n}\n", "description": "C entry point" },
+        { "label": "c-for", "prefix": "for", "body": "for (int ${1:i} = 0; ${1:i} < ${2:count}; ${1:i}++) {\n  $0\n}\n", "description": "Counted for loop" },
+        { "label": "c-header-guard", "prefix": "guard", "body": "#ifndef ${1:HEADER}_H\n#define ${1:HEADER}_H\n\n$0\n\n#endif\n", "description": "Include guard" }
+      ]
+    },
+    "C++": {
+      "label": "C++",
+      "aliases": ["cpp", "c++", "cxx", "cc", "hpp", "hh", "hxx"],
+      "extensions": [".cc", ".cpp", ".cxx", ".hpp", ".hh", ".hxx"],
+      "keywords": ["#include", "#define", "#pragma", "const", "constexpr", "consteval", "static", "inline", "extern", "struct", "class", "enum", "union", "template", "namespace", "public", "protected", "private", "virtual", "override", "final", "using", "typedef", "typename", "auto", "decltype", "nullptr", "true", "false", "return", "if", "constexpr", "for", "while", "switch", "case", "break", "continue", "try", "catch", "throw", "new", "delete", "sizeof", "operator", "explicit", "mutable", "friend"],
+      "functions": ["printf", "malloc", "free", "std::vector", "std::string", "std::map", "std::set", "std::array", "std::unique_ptr", "std::shared_ptr", "std::make_unique", "std::make_shared", "std::move", "std::forward", "std::sort", "std::find", "std::begin", "std::end", "std::size", "std::format"],
+      "snippets": [
+        { "label": "cpp-class", "prefix": "class", "body": "class ${1:ClassName}\n{\npublic:\n  ${1:ClassName}() = default;\n  ~${1:ClassName}() = default;\n\nprivate:\n  $0\n};\n", "description": "C++ class skeleton" },
+        { "label": "cpp-range-for", "prefix": "for", "body": "for (const auto &${1:item} : ${2:items}) {\n  $0\n}\n", "description": "Range-based for loop" },
+        { "label": "cpp-namespace", "prefix": "namespace", "body": "namespace ${1:name}\n{\n$0\n}  // namespace ${1:name}\n", "description": "Named namespace" }
+      ]
+    },
+    "Python": {
+      "label": "Python",
+      "aliases": ["python", "py", "pyw", "python3"],
+      "extensions": [".py", ".pyw", ".pyi"],
+      "keywords": ["def", "class", "return", "if", "elif", "else", "for", "while", "try", "except", "finally", "with", "as", "import", "from", "pass", "break", "continue", "lambda", "yield", "async", "await", "raise", "assert", "global", "nonlocal", "del", "None", "True", "False", "and", "or", "not", "in", "is", "match", "case"],
+      "functions": ["print", "len", "range", "enumerate", "zip", "map", "filter", "sorted", "reversed", "sum", "min", "max", "abs", "round", "isinstance", "issubclass", "getattr", "setattr", "hasattr", "open", "json.loads", "json.dumps", "pathlib.Path", "dataclasses.dataclass", "typing.Optional", "typing.Iterable"],
+      "snippets": [
+        { "label": "py-function", "prefix": "def", "body": "def ${1:name}(${2:args}) -> ${3:None}:\n    \"\"\"${4:Describe the function.}\"\"\"\n    $0\n", "description": "Function with docstring" },
+        { "label": "py-class", "prefix": "class", "body": "class ${1:Name}:\n    \"\"\"${2:Describe the class.}\"\"\"\n\n    def __init__(self, ${3:args}) -> None:\n        $0\n", "description": "Class with initializer" },
+        { "label": "py-for", "prefix": "for", "body": "for ${1:item} in ${2:items}:\n    $0\n", "description": "For loop" },
+        { "label": "py-with", "prefix": "with", "body": "with ${1:context} as ${2:value}:\n    $0\n", "description": "Context manager block" }
+      ]
+    },
+    "JavaScript": {
+      "label": "JavaScript",
+      "aliases": ["javascript", "js", "jsx", "mjs", "cjs", "javascriptreact"],
+      "extensions": [".js", ".jsx", ".mjs", ".cjs"],
+      "keywords": ["const", "let", "var", "function", "return", "class", "extends", "new", "if", "else", "for", "while", "switch", "case", "break", "continue", "try", "catch", "finally", "throw", "async", "await", "import", "export", "default", "from", "null", "undefined", "true", "false", "typeof", "instanceof", "this", "super", "yield", "static", "get", "set"],
+      "functions": ["console.log", "console.error", "JSON.stringify", "JSON.parse", "Array.from", "Object.keys", "Object.values", "Object.entries", "Object.assign", "Promise.all", "Promise.resolve", "fetch", "setTimeout", "setInterval", "Math.max", "Math.min", "String", "Number", "Boolean", "parseInt"],
+      "snippets": [
+        { "label": "js-function", "prefix": "function", "body": "function ${1:name}(${2:args}) {\n  $0\n}\n", "description": "Function declaration" },
+        { "label": "js-arrow", "prefix": "arrow", "body": "const ${1:name} = (${2:args}) => {\n  $0\n};\n", "description": "Arrow function" },
+        { "label": "js-try", "prefix": "try", "body": "try {\n  $0\n} catch (${1:error}) {\n  console.error(${1:error});\n}\n", "description": "Try/catch block" }
+      ]
+    },
+    "TypeScript": {
+      "label": "TypeScript",
+      "aliases": ["typescript", "ts", "tsx", "typescriptreact"],
+      "extensions": [".ts", ".tsx"],
+      "keywords": ["const", "let", "var", "function", "return", "class", "extends", "implements", "new", "if", "else", "for", "while", "switch", "case", "try", "catch", "finally", "throw", "async", "await", "import", "export", "default", "from", "interface", "type", "enum", "namespace", "declare", "public", "private", "protected", "readonly", "abstract", "keyof", "typeof", "as", "satisfies", "null", "undefined", "true", "false", "this", "super"],
+      "functions": ["console.log", "JSON.stringify", "Object.keys", "Object.entries", "Promise.all", "fetch", "Number", "String", "Boolean", "Date", "Map", "Set", "Record", "Partial", "Readonly", "Pick", "Omit", "Array.isArray"],
+      "snippets": [
+        { "label": "ts-interface", "prefix": "interface", "body": "interface ${1:Name} {\n  ${2:field}: ${3:string};\n  $0\n}\n", "description": "TypeScript interface" },
+        { "label": "ts-type", "prefix": "type", "body": "type ${1:Name} = ${2:string};\n", "description": "Type alias" },
+        { "label": "ts-function", "prefix": "function", "body": "function ${1:name}(${2:args}: ${3:unknown}): ${4:void} {\n  $0\n}\n", "description": "Typed function" }
+      ]
+    },
+    "Go": {
+      "label": "Go",
+      "aliases": ["go", "golang"],
+      "extensions": [".go"],
+      "keywords": ["package", "import", "func", "return", "var", "const", "type", "struct", "interface", "map", "chan", "go", "defer", "select", "switch", "case", "default", "if", "else", "for", "range", "nil", "true", "false", "iota", "fallthrough", "break", "continue", "make", "new", "len", "cap", "append", "copy", "delete", "panic", "recover"],
+      "functions": ["fmt.Println", "fmt.Printf", "fmt.Sprintf", "errors.New", "context.Background", "context.WithTimeout", "sync.WaitGroup", "sync.Mutex", "http.HandleFunc", "json.Marshal", "json.Unmarshal", "sort.Slice", "strings.Contains", "strings.Split", "strconv.Atoi", "time.Now"],
+      "snippets": [
+        { "label": "go-func", "prefix": "func", "body": "func ${1:name}(${2:args}) ${3:error} {\n  $0\n  return nil\n}\n", "description": "Go function" },
+        { "label": "go-struct", "prefix": "struct", "body": "type ${1:Name} struct {\n  ${2:Field} ${3:string}\n  $0\n}\n", "description": "Go struct" },
+        { "label": "go-for-range", "prefix": "range", "body": "for ${1:key}, ${2:value} := range ${3:items} {\n  $0\n}\n", "description": "Range loop" }
+      ]
+    },
+    "Rust": {
+      "label": "Rust",
+      "aliases": ["rust", "rs"],
+      "extensions": [".rs"],
+      "keywords": ["fn", "let", "mut", "const", "static", "struct", "enum", "trait", "impl", "for", "in", "if", "else", "match", "loop", "while", "return", "pub", "use", "mod", "crate", "super", "self", "Self", "Some", "None", "Ok", "Err", "async", "await", "move", "ref", "where", "as", "dyn", "unsafe", "true", "false"],
+      "functions": ["println!", "eprintln!", "format!", "vec!", "String::from", "Option::map", "Result::unwrap_or", "std::fs::read_to_string", "std::path::Path", "iter", "into_iter", "collect", "map", "filter", "fold", "unwrap_or_else"],
+      "snippets": [
+        { "label": "rs-fn", "prefix": "fn", "body": "fn ${1:name}(${2:args}) -> ${3:()}\n{\n  $0\n}\n", "description": "Rust function" },
+        { "label": "rs-impl", "prefix": "impl", "body": "impl ${1:Type}\n{\n  pub fn ${2:name}(&self) -> ${3:()}\n  {\n    $0\n  }\n}\n", "description": "Inherent implementation" },
+        { "label": "rs-match", "prefix": "match", "body": "match ${1:value} {\n  ${2:Pattern} => $0,\n  _ => {},\n}\n", "description": "Match expression" }
+      ]
+    },
+    "Shell": {
+      "label": "Shell",
+      "aliases": ["shellscript", "shell", "bash", "sh", "zsh", "ksh"],
+      "extensions": [".sh", ".bash", ".zsh", ".ksh"],
+      "keywords": ["if", "then", "else", "elif", "fi", "for", "while", "until", "do", "done", "case", "esac", "function", "return", "local", "export", "readonly", "declare", "set", "trap", "source", "exit", "true", "false", "in"],
+      "functions": ["echo", "printf", "read", "cd", "pwd", "test", "find", "grep", "sed", "awk", "cut", "sort", "uniq", "head", "tail", "wc", "date", "mkdir", "cp", "mv", "systemctl", "journalctl", "dirname", "basename"],
+      "snippets": [
+        { "label": "sh-function", "prefix": "function", "body": "${1:name}() {\n  local ${2:value}=${3:default}\n  $0\n}\n", "description": "Shell function" },
+        { "label": "sh-if", "prefix": "if", "body": "if [[ ${1:condition} ]]; then\n  $0\nelse\n  :\nfi\n", "description": "Conditional block" },
+        { "label": "sh-for", "prefix": "for", "body": "for ${1:item} in ${2:items}; do\n  $0\ndone\n", "description": "Shell for loop" }
+      ]
+    },
+    "Java": {
+      "label": "Java",
+      "aliases": ["java"],
+      "extensions": [".java"],
+      "keywords": ["public", "private", "protected", "static", "final", "abstract", "class", "interface", "enum", "record", "extends", "implements", "new", "return", "if", "else", "for", "while", "switch", "case", "break", "continue", "try", "catch", "finally", "throw", "throws", "package", "import", "null", "true", "false", "this", "super", "var", "sealed", "permits", "synchronized", "volatile"],
+      "functions": ["System.out.println", "String.format", "Objects.requireNonNull", "Optional.of", "Optional.empty", "List.of", "Map.of", "Set.of", "Collections.emptyList", "Math.max", "Math.min", "Integer.parseInt", "Long.parseLong", "UUID.randomUUID"],
+      "snippets": [
+        { "label": "java-class", "prefix": "class", "body": "public class ${1:Name}\n{\n  public ${1:Name}()\n  {\n  }\n\n  $0\n}\n", "description": "Java class skeleton" },
+        { "label": "java-main", "prefix": "main", "body": "public static void main(String[] args)\n{\n  $0\n}\n", "description": "Java entry point" },
+        { "label": "java-for-each", "prefix": "foreach", "body": "for (${1:Type} ${2:item} : ${3:items}) {\n  $0\n}\n", "description": "Enhanced for loop" }
+      ]
+    },
+    "C#": {
+      "label": "C#",
+      "aliases": ["csharp", "cs", "c#"],
+      "extensions": [".cs"],
+      "keywords": ["using", "namespace", "public", "private", "protected", "internal", "static", "abstract", "sealed", "class", "interface", "struct", "enum", "record", "var", "return", "if", "else", "for", "foreach", "while", "switch", "case", "try", "catch", "finally", "throw", "new", "null", "true", "false", "async", "await", "this", "base", "readonly", "virtual", "override"],
+      "functions": ["Console.WriteLine", "Console.Error.WriteLine", "string.Format", "DateTime.UtcNow", "Guid.NewGuid", "Enumerable.Select", "Enumerable.Where", "Enumerable.ToList", "File.ReadAllText", "File.WriteAllText", "JsonSerializer.Serialize", "JsonSerializer.Deserialize", "Task.Run"],
+      "snippets": [
+        { "label": "cs-class", "prefix": "class", "body": "public class ${1:Name}\n{\n    public ${1:Name}()\n    {\n    }\n\n    $0\n}\n", "description": "C# class skeleton" },
+        { "label": "cs-foreach", "prefix": "foreach", "body": "foreach (var ${1:item} in ${2:items})\n{\n    $0\n}\n", "description": "C# foreach loop" },
+        { "label": "cs-async", "prefix": "async", "body": "public async Task ${1:Method}Async()\n{\n    $0\n}\n", "description": "Async method" }
+      ]
+    },
+    "SQL": {
+      "label": "SQL",
+      "aliases": ["sql", "postgres", "postgresql", "mysql"],
+      "extensions": [".sql"],
+      "keywords": ["SELECT", "FROM", "WHERE", "JOIN", "LEFT", "RIGHT", "INNER", "OUTER", "FULL", "ON", "GROUP", "BY", "ORDER", "HAVING", "LIMIT", "OFFSET", "INSERT", "INTO", "VALUES", "UPDATE", "SET", "DELETE", "CREATE", "TABLE", "INDEX", "VIEW", "ALTER", "PRIMARY", "KEY", "FOREIGN", "REFERENCES", "UNIQUE", "DEFAULT", "NULL", "NOT", "AND", "OR", "AS", "DISTINCT", "WITH", "RETURNING", "CASE", "WHEN", "THEN", "ELSE", "END"],
+      "functions": ["COUNT", "SUM", "AVG", "MIN", "MAX", "COALESCE", "NULLIF", "CAST", "EXTRACT", "NOW", "CURRENT_DATE", "CURRENT_TIMESTAMP", "LOWER", "UPPER", "TRIM", "SUBSTRING", "LENGTH", "ROUND"],
+      "snippets": [
+        { "label": "sql-select", "prefix": "select", "body": "SELECT ${1:columns}\nFROM ${2:table}\nWHERE ${3:condition} = ?;\n", "description": "Parameterised select" },
+        { "label": "sql-insert", "prefix": "insert", "body": "INSERT INTO ${1:table} (${2:columns})\nVALUES (${3:values});\n", "description": "Insert statement" },
+        { "label": "sql-table", "prefix": "table", "body": "CREATE TABLE ${1:name} (\n  ${2:id} INTEGER PRIMARY KEY,\n  $0\n);\n", "description": "Create table" }
+      ]
+    },
+    "JSON": {
+      "label": "JSON",
+      "aliases": ["json", "jsonc"],
+      "extensions": [".json", ".jsonc"],
+      "keywords": ["true", "false", "null"],
+      "functions": [],
+      "snippets": [
+        { "label": "json-object", "prefix": "object", "body": "{\n  \"${1:name}\": \"${2:value}\",\n  $0\n}\n", "description": "JSON object" },
+        { "label": "json-array", "prefix": "array", "body": "[\n  $0\n]\n", "description": "JSON array" },
+        { "label": "json-pair", "prefix": "pair", "body": "\"${1:name}\": \"${2:value}\"", "description": "JSON key/value pair" }
+      ]
+    },
+    "YAML": {
+      "label": "YAML",
+      "aliases": ["yaml", "yml", "jinja", "jinja2"],
+      "extensions": [".yaml", ".yml", ".jinja", ".jinja2"],
+      "keywords": ["true", "false", "null", "---", "...", "yes", "no"],
+      "functions": [],
+      "snippets": [
+        { "label": "yaml-map", "prefix": "map", "body": "${1:key}:\n  ${2:child}: ${3:value}\n  $0\n", "description": "Nested mapping" },
+        { "label": "yaml-list", "prefix": "list", "body": "${1:key}:\n  - ${2:value}\n  - $0\n", "description": "List block" },
+        { "label": "yaml-block", "prefix": "block", "body": "${1:key}: |\n  $0\n", "description": "Literal block scalar" }
+      ]
+    },
+    "Terraform": {
+      "label": "Terraform",
+      "aliases": ["terraform", "tf", "hcl", "hcl2"],
+      "extensions": [".tf", ".tfvars", ".hcl"],
+      "keywords": ["terraform", "provider", "resource", "data", "variable", "output", "module", "locals", "required_providers", "required_version", "backend", "lifecycle", "for_each", "count", "depends_on", "provisioner", "true", "false", "null"],
+      "functions": ["var", "local", "path.module", "element", "length", "lookup", "merge", "join", "split", "format", "jsonencode", "jsondecode", "toset", "tolist", "tomap", "file"],
+      "snippets": [
+        { "label": "tf-resource", "prefix": "resource", "body": "resource \"${1:type}\" \"${2:name}\" {\n  $0\n}\n", "description": "Terraform resource block" },
+        { "label": "tf-variable", "prefix": "variable", "body": "variable \"${1:name}\" {\n  type        = ${2:string}\n  description = \"${3:Describe this variable.}\"\n  $0\n}\n", "description": "Input variable" },
+        { "label": "tf-output", "prefix": "output", "body": "output \"${1:name}\" {\n  value = ${2:value}\n}\n", "description": "Output value" }
+      ]
+    },
+    "Dockerfile": {
+      "label": "Dockerfile",
+      "aliases": ["dockerfile", "containerfile"],
+      "extensions": [],
+      "keywords": ["FROM", "RUN", "CMD", "ENTRYPOINT", "COPY", "ADD", "WORKDIR", "ENV", "ARG", "EXPOSE", "VOLUME", "USER", "LABEL", "HEALTHCHECK", "SHELL", "STOPSIGNAL", "ONBUILD"],
+      "functions": [],
+      "snippets": [
+        { "label": "docker-from", "prefix": "FROM", "body": "FROM ${1:image}:${2:tag} AS ${3:stage}\n", "description": "Pinned base image stage" },
+        { "label": "docker-run", "prefix": "RUN", "body": "RUN set -eux; \\\n  $0\n", "description": "Fail-fast build step" },
+        { "label": "docker-copy", "prefix": "COPY", "body": "COPY --from=${1:stage} ${2:source} ${3:dest}\n", "description": "Copy from a build stage" }
+      ]
+    },
+    "Ruby": {
+      "label": "Ruby",
+      "aliases": ["ruby", "rb"],
+      "extensions": [".rb", ".rake", ".gemspec"],
+      "keywords": ["def", "class", "module", "end", "do", "if", "elsif", "else", "unless", "while", "until", "case", "when", "begin", "rescue", "ensure", "raise", "return", "yield", "self", "nil", "true", "false", "attr_reader", "attr_writer", "attr_accessor", "require", "require_relative", "alias", "undef"],
+      "functions": ["puts", "p", "print", "each", "map", "select", "reduce", "find", "keys", "values", "merge", "fetch", "File.read", "File.write", "JSON.parse", "JSON.generate", "Time.now"],
+      "snippets": [
+        { "label": "rb-class", "prefix": "class", "body": "class ${1:Name}\n  def initialize(${2:args})\n    $0\n  end\nend\n", "description": "Ruby class" },
+        { "label": "rb-method", "prefix": "def", "body": "def ${1:name}(${2:args})\n  $0\nend\n", "description": "Ruby method" },
+        { "label": "rb-each", "prefix": "each", "body": "${1:items}.each do |${2:item}|\n  $0\nend\n", "description": "Each block" }
+      ]
+    },
+    "Lua": {
+      "label": "Lua",
+      "aliases": ["lua"],
+      "extensions": [".lua"],
+      "keywords": ["local", "function", "end", "if", "then", "elseif", "else", "for", "in", "do", "while", "repeat", "until", "return", "break", "nil", "true", "false", "and", "or", "not", "self", "require", "goto"],
+      "functions": ["print", "pairs", "ipairs", "table.insert", "table.remove", "table.concat", "table.sort", "string.format", "string.sub", "string.gsub", "tonumber", "tostring", "type", "pcall", "xpcall", "os.time"],
+      "snippets": [
+        { "label": "lua-function", "prefix": "function", "body": "local function ${1:name}(${2:args})\n  $0\nend\n", "description": "Local function" },
+        { "label": "lua-for", "prefix": "for", "body": "for ${1:key}, ${2:value} in pairs(${3:table}) do\n  $0\nend\n", "description": "Pairs loop" },
+        { "label": "lua-table", "prefix": "table", "body": "local ${1:name} = {\n  $0\n}\n", "description": "Table literal" }
+      ]
+    },
+    "PowerShell": {
+      "label": "PowerShell",
+      "aliases": ["powershell", "ps1", "pwsh"],
+      "extensions": [".ps1", ".psm1", ".psd1"],
+      "keywords": ["function", "param", "begin", "process", "end", "if", "elseif", "else", "foreach", "while", "switch", "try", "catch", "finally", "throw", "return", "break", "continue", "export", "import", "local", "script", "global", "$true", "$false", "$null", "-eq", "-ne", "-and", "-or"],
+      "functions": ["Write-Output", "Write-Host", "Get-Item", "Set-Item", "Get-ChildItem", "Where-Object", "ForEach-Object", "Select-Object", "Sort-Object", "ConvertTo-Json", "ConvertFrom-Json", "Invoke-RestMethod", "Test-Path", "New-Item"],
+      "snippets": [
+        { "label": "ps-function", "prefix": "function", "body": "function ${1:Name} {\n  param(${2:args})\n\n  $0\n}\n", "description": "PowerShell function" },
+        { "label": "ps-if", "prefix": "if", "body": "if (${1:condition}) {\n  $0\n}\nelse {\n}\n", "description": "Conditional block" },
+        { "label": "ps-pipeline", "prefix": "where", "body": "${1:items} | Where-Object { $_.${2:Property} -eq ${3:value} }\n", "description": "Filtered pipeline" }
+      ]
+    },
+    "HTML": {
+      "label": "HTML",
+      "aliases": ["html", "htm", "xhtml"],
+      "extensions": [".html", ".htm", ".xhtml"],
+      "keywords": ["<!DOCTYPE html>", "html", "head", "body", "div", "span", "p", "a", "ul", "ol", "li", "table", "tr", "td", "th", "form", "input", "button", "select", "script", "style", "meta", "title", "link", "section", "article", "header", "footer", "nav", "main", "h1", "h2", "h3", "h4", "h5", "h6"],
+      "functions": [],
+      "snippets": [
+        { "label": "html-page", "prefix": "html", "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>${1:Title}</title>\n</head>\n<body>\n  $0\n</body>\n</html>\n", "description": "HTML page skeleton" },
+        { "label": "html-list", "prefix": "ul", "body": "<ul>\n  <li>$0</li>\n</ul>\n", "description": "Unordered list" },
+        { "label": "html-section", "prefix": "section", "body": "<section>\n  <h2>${1:Heading}</h2>\n  $0\n</section>\n", "description": "Section with heading" }
+      ]
+    },
+    "CSS": {
+      "label": "CSS",
+      "aliases": ["css", "scss", "less"],
+      "extensions": [".css", ".scss", ".less"],
+      "keywords": ["color", "background", "background-color", "display", "flex", "grid", "margin", "padding", "width", "height", "min-width", "max-width", "border", "border-radius", "font-size", "font-family", "font-weight", "position", "absolute", "relative", "fixed", "sticky", "top", "right", "bottom", "left", "gap", "align-items", "justify-content", "flex-direction", "transition", "transform", "opacity", ":hover", ":focus", "::before", "::after"],
+      "functions": ["rgb", "rgba", "hsl", "var", "calc", "min", "max", "clamp", "url", "linear-gradient"],
+      "snippets": [
+        { "label": "css-flex", "prefix": "flex", "body": "display: flex;\nalign-items: ${1:center};\njustify-content: ${2:center};\ngap: ${3:1rem};$0\n", "description": "Flex container" },
+        { "label": "css-grid", "prefix": "grid", "body": "display: grid;\ngrid-template-columns: ${1:repeat(3, 1fr)};\ngap: ${2:1rem};$0\n", "description": "Grid container" },
+        { "label": "css-media", "prefix": "media", "body": "@media (max-width: ${1:768px}) {\n  $0\n}\n", "description": "Responsive media query" }
+      ]
+    },
+    "Markdown": {
+      "label": "Markdown",
+      "aliases": ["markdown", "md"],
+      "extensions": [".md", ".markdown"],
+      "keywords": ["#", "##", "###", "-", "*", "1.", ">", "```", "---"],
+      "functions": [],
+      "snippets": [
+        { "label": "md-heading", "prefix": "heading", "body": "## ${1:Heading}\n\n$0\n", "description": "Second-level heading" },
+        { "label": "md-list", "prefix": "list", "body": "- ${1:first}\n- ${2:second}\n- $0\n", "description": "Bullet list" },
+        { "label": "md-code", "prefix": "code", "body": "```${1:language}\n$0\n```\n", "description": "Fenced code block" },
+        { "label": "md-link", "prefix": "link", "body": "[${1:text}](${2:url})", "description": "Inline link" }
+      ]
+    }
+  }
+}
